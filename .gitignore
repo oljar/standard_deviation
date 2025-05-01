@@ -1,0 +1,5 @@
+.venv/
+.idea/
+.git/
+dane.csv
+dane.xlsx
