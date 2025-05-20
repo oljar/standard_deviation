@@ -17,7 +17,7 @@ def odchylenie_standardowe(k_factor,a,b):
     df = pd.read_excel(plik_excel)
 
     # Założenie, że kolumny w Excelu mają nazwy 'X' i 'Y'
-    temp = np.array(df[['X', 'N']].values)
+    temp = np.array(df[['X', 'W']].values)
     t = temp[:, 0] # czas
     P = temp[:, 1] #  spadek ciśnienia
 
@@ -49,9 +49,9 @@ def odchylenie_standardowe(k_factor,a,b):
         return abs(A * x0 + B * y0 + C) / math.sqrt(A**2 + B**2)
     accu = []
     for (x,y) in punkty:
-        z=odległość_euklidesowa(x, y, A, B, C)
-        accu.append(z)
-    std_dev = np.std(accu)
+        z=odległość_euklidesowa(x, y, A, B, C) # dla każdego punktu obliczam odległość
+        accu.append(z)  #lista z odległościami
+    std_dev = np.std(accu)   # wyznaczenie standardowego odchylenia
 
 
     return float(std_dev)
@@ -59,27 +59,27 @@ def odchylenie_standardowe(k_factor,a,b):
 ###############################")
 
 
-a=5071.1
-b=-2324.3
-# a=5133.3 W
-# b=-2335.3 W
+# a=5071.1 N
+# b=-2324.3 N
+a=5133.3
+b=-2335.3
 
-k = np.arange(30, 40, 0.1)
+k = np.arange(30, 40, 0.1)  #  lista z wartościami k co 0.1 w przedziale
 
 
 result = []
 for i in k:
-    result.append(odchylenie_standardowe(i, a, b))
+    result.append(odchylenie_standardowe(i, a, b))  # lista z odchyleniami standardowymi
 
 
 
 
 print (result)
 
-dictionary = dict(zip(k, result))
+dictionary = dict(zip(k, result)) #łączę z k_fact z odchyleniem standardowym
 
-min_key = min(dictionary, key=lambda x: dictionary[x])
-min_value = dictionary[min_key]
+min_key = min(dictionary, key=lambda x: dictionary[x]) # znajduję klucz dla minimalnej wartości
+min_value = dictionary[min_key]  # znajduję minimalną wartość
 
 
 print(f"Najmniejsza wartość: {min_value}, Klucz: {min_key}")
